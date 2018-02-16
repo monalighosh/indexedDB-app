@@ -106,12 +106,16 @@ a:active {
   padding: 1em;
 }
 
-label,
-input {
+.content__inputs label,
+.content__inputs input {
   display: block;
 }
 
-input {
+.content__inputs label {
+  padding-bottom: 1.2em;
+}
+
+.content__inputs input {
   width: 60%;
   padding: 0.6em;
   margin-bottom: 1.7em;
@@ -120,15 +124,11 @@ input {
   outline: none;
 }
 
-input:focus {
+.content__inputs input:focus {
   border: 2px solid rgba(0, 0, 0, 0.5);
 }
 
-label {
-  padding-bottom: 1.2em;
-}
-
-button {
+.content__inputs button {
   padding: 0.5em 1em;
   font-size: inherit;
   font-family: inherit;
@@ -139,6 +139,6 @@ button {
   transition: all 0.5s ease;
 }
 
-button:hover {
+.content__inputs button:hover {
   background: rgba(0, 0, 0, 0.7);
 }
