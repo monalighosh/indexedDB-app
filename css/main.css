@@ -80,8 +80,8 @@ a:active {
   background: white;
 }
 
-#data td,
-#data th {
+#data th,
+#data td {
   border-bottom: 2px solid rgba(0, 0, 0, 0.3);
   text-align: left;
   padding: 1em;
