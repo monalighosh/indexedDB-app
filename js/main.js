@@ -39,10 +39,10 @@ if ("indexedDB" in window) {
     };
 
     // Query the data
-    let getDan = store.getAll();
+    let getDan = store.get("Dan");
 
     getDan.onsuccess = function() {
-      console.log(getDan.result);
+      console.log(getDan.result.email);
     };
 
     // Closes the db when the transaction is done

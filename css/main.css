@@ -28,7 +28,7 @@ h1 {
 }
 
 a:link {
-  border-bottom: 2px solid rgba(0, 0, 0, 0.2);
+  border-bottom: 2px solid rgba(255, 255, 255, 0.2);
   color: white;
   transition: all 0.5s ease;
 }
@@ -69,6 +69,7 @@ a:active {
   background: rgba(255, 255, 255, 0.5);
   display: flex;
   flex: 2;
+  flex-direction: column;
 }
 
 #data {
@@ -76,13 +77,68 @@ a:active {
   width: 100%;
 }
 
-#data th {
+#data caption,
+.content__heading {
+  font-weight: 700;
   background: white;
 }
 
+#data th {
+  background: rgba(255, 255, 255, 0.5);
+  font-weight: 500;
+}
+
+#data caption,
 #data th,
-#data td {
+#data td,
+.content__heading {
   border-bottom: 2px solid rgba(0, 0, 0, 0.3);
   text-align: left;
   padding: 1em;
+}
+
+.content__heading,
+.content__inputs {
+  width: 100%;
+}
+
+.content__inputs {
+  padding: 1em;
+}
+
+label,
+input {
+  display: block;
+}
+
+input {
+  width: 60%;
+  padding: 0.6em;
+  margin-bottom: 1.7em;
+  font-size: inherit;
+  font-family: inherit;
+  outline: none;
+}
+
+input:focus {
+  border: 2px solid rgba(0, 0, 0, 0.5);
+}
+
+label {
+  padding-bottom: 1.2em;
+}
+
+button {
+  padding: 0.5em 1em;
+  font-size: inherit;
+  font-family: inherit;
+  background: rgba(0, 0, 0, 0.3);
+  color: white;
+  border: 0;
+  cursor: pointer;
+  transition: all 0.5s ease;
+}
+
+button:hover {
+  background: rgba(0, 0, 0, 0.7);
 }
