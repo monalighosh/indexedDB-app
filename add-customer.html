@@ -27,11 +27,13 @@
       <div class="content__customer-data">
         <div class="content__heading">Add A Customer</div>
         <div class="content__inputs">
+          <form action="#" name="add-customer-form" onsubmit="addCustomer()">
           <label for="fullName">Customer Name:</label>
-          <input type="text" name="fullName" placeholder="Enter your full name" id="fullName" autofocus required>          
+          <input type="text" name="fullName" placeholder="Enter your full name" id="fullName" autofocus required>
           <label for="email">Customer Email:</label>
           <input type="email" name="email" placeholder="Enter your email" id="email" required>
-          <button id="add" title="Add Customer">Add</button>
+          <button type="submit" id="add" title="Add Customer">Add</button>
+          </form>
         </div>
       </div>
     </div>

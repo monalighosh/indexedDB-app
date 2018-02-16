@@ -27,9 +27,11 @@
       <div class="content__customer-data">
         <div class="content__heading">Delete A Customer</div>
         <div class="content__inputs">
+          <form action="#" name="delete-customer-form" onsubmit="deleteCustomer()">
           <label for="emailDelete">Enter customer's email id:</label>
           <input type="email" name="fullName" placeholder="Enter customer's email id" id="emailDelete" autofocus required>          
-          <button id="add" title="Delete A Customer">Delete</button>
+          <button type="submit" id="add" title="Delete A Customer">Delete</button>
+          </form>
         </div>
       </div>
     </div>
