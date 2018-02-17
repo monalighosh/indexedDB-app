@@ -3,6 +3,7 @@ let database;
 let index;
 let clearAllBtn = document.querySelector("#clearCustomer");
 clearAllBtn.addEventListener("click", clearAllCustomers);
+
 // Check indexedDB is supported
 if("indexedDB" in window) {
   // Create indexedDB database
@@ -13,7 +14,7 @@ if("indexedDB" in window) {
     // Create object store
     let customerObjStore = database.createObjectStore("customersD1", { autoIncrement: true, keyPath: "id" });
     let index = customerObjStore.createIndex("email", "email", { unique: true });
-    console.log(`upgrading.... ${customerObjStore}`);
+    console.log("upgrading....");
   };
 
   // Handle success event
@@ -23,15 +24,15 @@ if("indexedDB" in window) {
     showCustomers();
 
     database.onerror = function(e) {
-      let errorCode = e.target.errorCode;
-      console.log(`Error within success handler: ${errorCode}`);
+      let errorName = e.target.error.name;
+      console.log(`Error within success handler: ${errorName}`);
     };
   };
 
   // Handle error event
   requestCustomer.onerror = function(e) {
-    let errorCode = e.target.errorCode;
-    console.log(`Error: ${errorCode}`);
+    let errorName = e.target.error.name;
+    console.log(`Error: ${errorName}`);
   };
 
 } else {
@@ -51,7 +52,7 @@ function addNewCustomer(e) {
   const newCustomer = {
     name,
     email,
-    dateCreated: new Date().toDateString()
+    dateCreated: new Date().toLocaleString()
   };
   // Start transaction to add data
   let requestTransaction = database.transaction(["customersD1"], "readwrite");
@@ -64,30 +65,29 @@ function addNewCustomer(e) {
   };
   
   addRequest.onerror = function(e) {
-    let errorCode = e.target.errorCode;
-    console.log(`Sorry, data is not added. Error: ${errorCode}`);
+    let errorName = e.target.error.name;
+    console.log(`Sorry, data is not added. Error: ${errorName}`);
   };
 }
 
 // Function to delete customers
-function deleteCustomer(e) {
-  // Prevent form submission
-  e.preventDefault();
-  let customerEmail = document.querySelector("#emailToDelete").value;
-
-  // Start a transaction to delete a customer
+function deleteCustomer(btn) {
+  const parentTr = btn.parentNode.parentNode;
+  const id = parseInt(parentTr.firstElementChild.textContent);
+  const parentTbody = parentTr.parentNode;
+  // Start transaction to delete a customer
   let deleteTransaction = database.transaction(["customersD1"], "readwrite");
   let deleteStore = deleteTransaction.objectStore("customersD1");
-  let index = deleteStore.index("email");
-  let deleteRequest = index.get(customerEmail);
+  let deleteRequest = deleteStore.delete(id);
 
   deleteRequest.onsuccess = function(e) {
-    console.log(e.target.result);
+    parentTbody.removeChild(parentTr);
+    console.log("Removed customer");
   };
 
   deleteRequest.onerror = function(e) {
-    let errorCode = e.target.errorCode;
-    console.log(`Sorry, data is not deleted. Error: ${errorCode}`);
+    let errorName = e.target.error.name;
+    console.log(`Sorry, data is not added. Error: ${errorName}`);
   };
 }
 
@@ -96,30 +96,30 @@ function showCustomers(e){
 //   // Start a transaction to get the data
   let getTransaction = database.transaction(["customersD1"], "readonly");
   let getStore = getTransaction.objectStore("customersD1");
+  // Opens cursor on object store to iteratate over customer objects
   let cursor = getStore.openCursor();
+  let output = "";
 
   cursor.onsuccess = function(e) {
     let requestResult = e.target.result;
     let tbody = document.querySelector("#data tbody");
-    let row = document.createElement("tr");
-
+    // Add new row with customer's details into table body
     if(requestResult) {
-      for(let i in requestResult.value) {
-        let td = document.createElement("td");
-        let tx = document.createTextNode(requestResult.value[i]);
-        td.appendChild(tx);
-        row.appendChild(td);
-        console.log(i);
-      }
+      output += `<tr>
+      <td>${requestResult.value.id}</td>
+      <td>${requestResult.value.name}</td>
+      <td>${requestResult.value.email}</td>
+      <td>${requestResult.value.dateCreated}</td>
+      <td><a href="#" class="deleteBtn" title="Remove Customer" onclick="deleteCustomer(this)">&#10005;</a></td>
+      </tr>`;
       requestResult.continue();
     }
-    tbody.appendChild(row);
-    console.log("Got the data");
+    tbody.innerHTML = output;
   };
 
   cursor.onerror = function(e) {
-    let errorCode = e.target.errorCode;
-    console.log(`Error: ${errorCode}`);
+    let errorName = e.target.error.name;
+    console.log(`Error: ${errorName}`);
   };
 }
 
@@ -128,15 +128,7 @@ function clearAllCustomers(e) {
   e.preventDefault();
   // Delete entire database
   let deleteDatabaseRequest = window.indexedDB.deleteDatabase("customerDataNew");
-
-  deleteDatabaseRequest.onsuccess = function(e) {
-    console.log("Database deleted successfully!")
-    window.location.assign("index.html");
-  };
-
-  deleteDatabaseRequest.onerror = function(e) {
-    console.log("Error deleting datbase!");
-  };
+  window.location.assign("index.html");
 
   // Start a transaction to delete all customers records (not entire database)
   // let deleteAllTransaction = database.transaction(["customersD1"], "readwrite");
@@ -151,8 +143,7 @@ function clearAllCustomers(e) {
   // };
 
   // deleteAllRequest.onerror = function(e){
-  //   let errorCode = e.target.errorCode;
-  //   console.log(`Error: ${errorCode}`);
+  //   let errorName = e.target.error.name;
+  //   console.log(`Error: ${errorName}`);
   // };
-
 }

@@ -142,3 +142,15 @@ a:active {
 .content__inputs button:hover {
   background: rgba(0, 0, 0, 0.7);
 }
+
+.deleteBtn:link {
+  padding: 1em;
+  color: black;
+  font-weight: 700;
+  border-bottom: none;
+}
+
+.deleteBtn:hover {
+  background: transparent;
+  color: red;
+}
