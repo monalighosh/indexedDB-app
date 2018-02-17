@@ -132,11 +132,11 @@ function clearAllCustomers(e) {
   deleteDatabaseRequest.onsuccess = function(e) {
     console.log("Database deleted successfully!")
     window.location.assign("index.html");
-  }
+  };
 
   deleteDatabaseRequest.onerror = function(e) {
-    console.log("Error deleting datbase!")
-  }
+    console.log("Error deleting datbase!");
+  };
 
   // Start a transaction to delete all customers records (not entire database)
   // let deleteAllTransaction = database.transaction(["customersD1"], "readwrite");
