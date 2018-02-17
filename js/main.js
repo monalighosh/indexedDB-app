@@ -1,5 +1,8 @@
 "use strict";
 let database;
+let index;
+let clearAllBtn = document.querySelector("#clearCustomer");
+clearAllBtn.addEventListener("click", clearAllCustomers);
 // Check indexedDB is supported
 if("indexedDB" in window) {
   // Create indexedDB database
@@ -9,6 +12,7 @@ if("indexedDB" in window) {
     let database = requestCustomer.result;
     // Create object store
     let customerObjStore = database.createObjectStore("customersD1", { autoIncrement: true, keyPath: "id" });
+    let index = customerObjStore.createIndex("email", "email", { unique: true });
     console.log(`upgrading.... ${customerObjStore}`);
   };
 
@@ -17,7 +21,6 @@ if("indexedDB" in window) {
     database = requestCustomer.result;
     console.log("success....");
     showCustomers();
-
 
     database.onerror = function(e) {
       let errorCode = e.target.errorCode;
@@ -75,10 +78,11 @@ function deleteCustomer(e) {
   // Start a transaction to delete a customer
   let deleteTransaction = database.transaction(["customersD1"], "readwrite");
   let deleteStore = deleteTransaction.objectStore("customersD1");
-  let deleteRequest = deleteStore.delete();
+  let index = deleteStore.index("email");
+  let deleteRequest = index.get(customerEmail);
 
   deleteRequest.onsuccess = function(e) {
-    console.log("Record deleted");
+    console.log(e.target.result);
   };
 
   deleteRequest.onerror = function(e) {
@@ -89,7 +93,7 @@ function deleteCustomer(e) {
 
 // Function to show customers
 function showCustomers(e){
-  // Start a transaction to get the data
+//   // Start a transaction to get the data
   let getTransaction = database.transaction(["customersD1"], "readonly");
   let getStore = getTransaction.objectStore("customersD1");
   let cursor = getStore.openCursor();
@@ -117,4 +121,38 @@ function showCustomers(e){
     let errorCode = e.target.errorCode;
     console.log(`Error: ${errorCode}`);
   };
+}
+
+// Function to delete all customers
+function clearAllCustomers(e) {
+  e.preventDefault();
+  // Delete entire database
+  let deleteDatabaseRequest = window.indexedDB.deleteDatabase("customerDataNew");
+
+  deleteDatabaseRequest.onsuccess = function(e) {
+    console.log("Database deleted successfully!")
+    window.location.assign("index.html");
+  }
+
+  deleteDatabaseRequest.onerror = function(e) {
+    console.log("Error deleting datbase!")
+  }
+
+  // Start a transaction to delete all customers records (not entire database)
+  // let deleteAllTransaction = database.transaction(["customersD1"], "readwrite");
+  // let deleteAllStore = deleteAllTransaction.objectStore("customersD1");
+  // let deleteAllRequest = deleteAllStore.clear();
+
+  // deleteAllRequest.onsuccess = function(e){
+  //   let tbody = document.querySelector("#data tbody");
+  //   tbody.innerHTML = "";
+  //   window.location.assign("index.html");
+  //   console.log("Data has been deleted");
+  // };
+
+  // deleteAllRequest.onerror = function(e){
+  //   let errorCode = e.target.errorCode;
+  //   console.log(`Error: ${errorCode}`);
+  // };
+
 }
