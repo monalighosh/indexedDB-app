@@ -27,16 +27,20 @@
       <div class="content__customer-data">
         <div class="content__heading">Delete A Customer</div>
         <div class="content__inputs">
-          <form action="#" name="delete-customer-form" onsubmit="deleteCustomer()">
+          <form id="formDeleteCustomer">
           <label for="emailDelete">Enter customer's email id:</label>
-          <input type="email" name="fullName" placeholder="Enter customer's email id" id="emailDelete" autofocus required>          
-          <button type="submit" id="add" title="Delete A Customer">Delete</button>
+          <input type="email" name="fullName" placeholder="Enter customer's email id" id="emailToDelete" autofocus required>          
+          <button type="submit" title="Delete A Customer">Delete</button>
           </form>
         </div>
       </div>
     </div>
   </div>
 <!-- Scripts -->
+<script>
+  const formToDeleteCustomer = document.querySelector("#formDeleteCustomer");
+  formToDeleteCustomer.addEventListener("submit", deleteCustomer);
+</script>
 <script src="js/main.js"></script>
 </body>
 </html>
