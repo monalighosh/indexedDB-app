@@ -43,11 +43,12 @@ function addNewCustomer(e) {
   // Store form input values
   const name = document.querySelector("#fullName").value;
   const email = document.querySelector("#email").value;
+
   // Object to store new customer's details
   const newCustomer = {
     name,
     email,
-    dateCreated: new Date()
+    dateCreated: new Date().toDateString()
   };
   // Start transaction to add data
   let requestTransaction = database.transaction(["customersD1"], "readwrite");
@@ -67,24 +68,53 @@ function addNewCustomer(e) {
 
 // Function to delete customers
 function deleteCustomer(e) {
+  // Prevent form submission
+  e.preventDefault();
   let customerEmail = document.querySelector("#emailToDelete").value;
+
+  // Start a transaction to delete a customer
+  let deleteTransaction = database.transaction(["customersD1"], "readwrite");
+  let deleteStore = deleteTransaction.objectStore("customersD1");
+  let deleteRequest = deleteStore.delete();
+
+  deleteRequest.onsuccess = function(e) {
+    console.log("Record deleted");
+  };
+
+  deleteRequest.onerror = function(e) {
+    let errorCode = e.target.errorCode;
+    console.log(`Sorry, data is not deleted. Error: ${errorCode}`);
+  };
 }
 
 // Function to show customers
 function showCustomers(e){
-// Start a transaction to get the data
-let getTransaction = database.transaction(["customersD1"], "readonly");
-let getStore = getTransaction.objectStore("customersD1");
-let getRequest = getStore.getAll();
+  // Start a transaction to get the data
+  let getTransaction = database.transaction(["customersD1"], "readonly");
+  let getStore = getTransaction.objectStore("customersD1");
+  let cursor = getStore.openCursor();
 
-getRequest.onsuccess = function(e) {
-  let requestResult = getRequest.result;
-  console.log(`Got the data ${requestResult}`);
-};
+  cursor.onsuccess = function(e) {
+    let requestResult = e.target.result;
+    let tbody = document.querySelector("#data tbody");
+    let row = document.createElement("tr");
 
-getRequest.onerror = function(e) {
-  let errorCode = e.target.errorCode;
-  console.log(`Error: ${errorCode}`);
-};
+    if(requestResult) {
+      for(let i in requestResult.value) {
+        let td = document.createElement("td");
+        let tx = document.createTextNode(requestResult.value[i]);
+        td.appendChild(tx);
+        row.appendChild(td);
+        console.log(i);
+      }
+      requestResult.continue();
+    }
+    tbody.appendChild(row);
+    console.log("Got the data");
+  };
 
+  cursor.onerror = function(e) {
+    let errorCode = e.target.errorCode;
+    console.log(`Error: ${errorCode}`);
+  };
 }
