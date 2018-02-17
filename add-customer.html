@@ -18,11 +18,13 @@
   <div class="wrapper">
     <h1>Customer Manager App</h1>
     <div class="content">
-        <ul class="content__btn-list">
-          <li><a href="index.html" class="content__btns" title="Customers" id="customers">Customers</a></li>
-          <li><a href="add-customer.html" class="content__btns" title="Add A Customer" id="addACustomer">Add A Customer</a></li>
-          <li><a href="#" class="content__btns" title="Clear Customers" id="clearCustomer">Clear Customers</a></li>
-        </ul>
+      <!-- Navigation -->
+      <ul class="content__btn-list">
+        <li><a href="index.html" class="content__btns" title="Customers" id="customers">Customers</a></li>
+        <li><a href="add-customer.html" class="content__btns" title="Add A Customer" id="addACustomer">Add A Customer</a></li>
+        <li><a href="#" class="content__btns" title="Clear Customers" id="clearCustomer">Clear Customers</a></li>
+      </ul>
+      <!-- Add customer tabular data -->
       <div class="content__customer-data">
         <div class="content__heading">Add A Customer</div>
         <div class="content__inputs">
@@ -40,6 +42,7 @@
 <!-- Scripts -->
 <script src="js/main.js"></script>
 <script>
+  // Add submit event to form element
   const formToAddCustomer = document.querySelector("#formAddCustomer");
   formToAddCustomer.addEventListener("submit", addNewCustomer);
 </script>

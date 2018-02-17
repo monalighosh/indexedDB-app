@@ -72,6 +72,7 @@ function addNewCustomer(e) {
 
 // Function to delete customers
 function deleteCustomer(btn) {
+  // Get an id of current element
   const parentTr = btn.parentNode.parentNode;
   const id = parseInt(parentTr.firstElementChild.textContent);
   const parentTbody = parentTr.parentNode;
@@ -81,6 +82,7 @@ function deleteCustomer(btn) {
   let deleteRequest = deleteStore.delete(id);
 
   deleteRequest.onsuccess = function(e) {
+    // Removes tr from parent tbody
     parentTbody.removeChild(parentTr);
     console.log("Removed customer");
   };

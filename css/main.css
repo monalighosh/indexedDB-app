@@ -48,10 +48,12 @@ a:active {
   display: flex;
   justify-content: flex-start;
   max-width: 1300px;
+  min-width: 750px;
   min-height: 400px;
   width: 80%;
 }
 
+/* Buttons styles */
 .content__btn-list {
   background: rgba(0, 0, 0, 0.3);
   list-style-type: none;
@@ -64,6 +66,7 @@ a:active {
   padding: 1em 2em;
 }
 
+/* Table styles */
 .content__customer-data {
   align-items: flex-start;
   background: rgba(255, 255, 255, 0.5);
@@ -143,6 +146,7 @@ a:active {
   background: rgba(0, 0, 0, 0.7);
 }
 
+/* Delete button link styles */
 .deleteBtn:link {
   padding: 1em;
   color: black;
@@ -154,3 +158,29 @@ a:active {
   background: transparent;
   color: red;
 }
+
+/* ------------------------------------------------------------
+  Media queries styles
+------------------------------------------------------------ */  
+@media screen and (max-width: 1200px) {
+  .content {
+    width: 95%;
+  }
+}
+
+@media screen and (max-width: 1000px) {
+  .content {
+    flex-direction: column;
+  }
+
+  .content__btn-list {
+    display: flex;
+  }
+}
+
+@media screen and (max-width: 850px) {
+  .content {
+    width: 100%;
+  }
+}
+
