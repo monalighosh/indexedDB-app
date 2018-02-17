@@ -29,9 +29,9 @@
         <div class="content__inputs">
           <form id="formAddCustomer">
           <label for="fullName">Customer Name:</label>
-          <input type="text" name="fullName" placeholder="Enter your full name" id="fullName" autofocus required>
+          <input type="text" name="fullName" placeholder="Enter your full name" id="fullName" autofocus >
           <label for="email">Customer Email:</label>
-          <input type="email" name="email" placeholder="Enter your email" id="email" required>
+          <input type="email" name="email" placeholder="Enter your email" id="email" >
           <button type="submit" title="Add Customer">Add</button>
           </form>
         </div>
@@ -39,10 +39,10 @@
     </div>
   </div>
 <!-- Scripts -->
+<script src="js/main.js"></script>
 <script>
   const formToAddCustomer = document.querySelector("#formAddCustomer");
   formToAddCustomer.addEventListener("submit", addNewCustomer);
 </script>
-<script src="js/main.js"></script>
 </body>
 </html>
