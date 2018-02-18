@@ -17,7 +17,7 @@ body {
   align-items: center;
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  min-height: 100vh;
   justify-content: center;
   position: relative;
   width: 100%;
@@ -181,12 +181,12 @@ a:active {
 }
 
 @media screen and (max-width: 850px) {
-  .wrapper {
-    text-align: center;
-  }
-
   .content {
     min-width: 0;
+  }
+
+  .content__btn-list {
+    display: block;
   }
 
   #data, #data thead, #data tbody, #data th, #data td, #data tr, #data caption { 
@@ -209,7 +209,7 @@ a:active {
   
   #data td { 
     position: relative;
-    padding-left: 50%; 
+    padding-left: 40%; 
   }
 
   #data tr td:nth-child(even) {
@@ -220,7 +220,7 @@ a:active {
     position: absolute;
     top: 20px;
     left: 40px;
-    width: 45%; 
+    width: 35%; 
     padding-right: 20px; 
     white-space: nowrap;
   } 
@@ -241,7 +241,11 @@ a:active {
   }
 }
 
-@media screen and (max-width: 610px) {
+@media screen and (max-width: 620px) {
+  .wrapper {
+    text-align: center;
+  }
+
   body {
     font-size: 100%;
   }
@@ -265,7 +269,10 @@ a:active {
   td:before { 
     top: 18px;
     left: 20px;
-    width: 35%;
+    width: 30%;
+  }
+
+  .content__inputs input {
+    width: 100%;
   }
 }
-
