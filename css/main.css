@@ -105,6 +105,8 @@ a:active {
   width: 100%;
 }
 
+/* Form styles */
+
 .content__inputs {
   padding: 1em;
 }
@@ -179,8 +181,91 @@ a:active {
 }
 
 @media screen and (max-width: 850px) {
+  .wrapper {
+    text-align: center;
+  }
+
+  .content {
+    min-width: 0;
+  }
+
+  #data, #data thead, #data tbody, #data th, #data td, #data tr, #data caption { 
+    display: block; 
+  }
+
+  #data caption {
+    text-align: center;
+  }
+
+  thead tr { 
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+  }
+
+  tr { 
+    border-bottom: 2px solid rgba(0, 0, 0, 1); 
+  } 
+  
+  #data td { 
+    position: relative;
+    padding-left: 50%; 
+  }
+
+  #data tr td:nth-child(even) {
+    background: rgba(0, 0, 0, 0.15);
+  }
+    
+  td:before { 
+    position: absolute;
+    top: 20px;
+    left: 40px;
+    width: 45%; 
+    padding-right: 20px; 
+    white-space: nowrap;
+  } 
+
+/* Label the data */
+  td:before { 
+    font-weight: 500;
+  }
+
+  td:nth-of-type(1):before { content: "ID"; }
+  td:nth-of-type(2):before { content: "Name"; }
+  td:nth-of-type(3):before { content: "Email"; }
+  td:nth-of-type(4):before { content: "Date"; }
+  td:nth-of-type(5):before { content: "Remove"; }
+
+  .deleteBtn:link {
+    padding-left: 0.2em;
+  }
+}
+
+@media screen and (max-width: 610px) {
+  body {
+    font-size: 100%;
+  }
+
   .content {
     width: 100%;
+  }
+
+  .content__btn-list {
+    flex-direction: column;
+  }
+
+  .content__btns {
+    padding: 1em 1em;
+  }
+
+  #data td { 
+    padding-left: 35%; 
+  }
+
+  td:before { 
+    top: 18px;
+    left: 20px;
+    width: 35%;
   }
 }
 
